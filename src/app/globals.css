@@ -1,0 +1,125 @@
+@import "tailwindcss";
+
+@theme {
+  /* CU Boulder brand palette */
+  --color-gold: #cfb87c; /* CU Gold — fills, borders, text on black */
+  --color-gold-dark: #8a7432; /* gold for text on light backgrounds (AA) */
+  --color-gold-soft: #f3ecd9;
+  --color-black: #000000;
+  --color-dark-gray: #565a5c;
+  --color-light-gray: #a2a4a3;
+
+  /* Surfaces */
+  --color-bg: #faf8f2;
+  --color-surface: #ffffff;
+  --color-night: #0b0b0b;
+
+  --color-ink: #111111;
+  --color-ink-muted: #565a5c;
+  --color-border: #e6e1d4;
+
+  --radius-card: 12px;
+  --radius-button: 8px;
+
+  --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.06);
+  --shadow-elevated: 0 10px 36px rgba(0, 0, 0, 0.1);
+
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display:
+    var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+  --ease-apple: cubic-bezier(0.28, 0.11, 0.32, 1);
+
+  --animate-fade-up: fade-up 0.8s var(--ease-apple) both;
+  --animate-trace: trace 6s linear infinite;
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes trace {
+  to {
+    stroke-dashoffset: -400;
+  }
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    @apply bg-bg text-ink font-sans text-[17px] leading-[1.5] tracking-[-0.011em];
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display), ui-sans-serif, system-ui, sans-serif;
+  }
+
+  ::selection {
+    background: var(--color-gold);
+    color: #000;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-gold);
+    outline-offset: 3px;
+  }
+}
+
+/* Scroll reveal: elements start hidden only once JS has marked the page ready,
+   so the content is always visible without JS. */
+.js-reveal .reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 0.8s var(--ease-apple),
+    transform 0.8s var(--ease-apple);
+}
+.js-reveal .reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Fine gold grid used on the CTA band */
+.cta-grid {
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.07) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(
+    ellipse 70% 70% at 50% 50%,
+    #000 30%,
+    transparent 80%
+  );
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .js-reveal .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}
